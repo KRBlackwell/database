@@ -7,23 +7,23 @@ config = configparser.ConfigParser()
 config_file = os.path.join(os.environ['HOME'], 'db_config.ini')
 config.read(config_file)
 
-user = config.get('credentials', 'user')
-pw = config.get('credentials', 'oracle_password')
-dsn = config.get('credentials', 'oracle_dsn')
+USER = config.get('credentials', 'user')
+PASSWORD = config.get('credentials', 'oracle_password')
+DSN = config.get('credentials', 'oracle_dsn')
 
 #this is None on Linux:
 instant_client_dir = None
 
 oracledb.init_oracle_client(lib_dir=instant_client_dir)
 print("oracledb client version:", oracledb.clientversion())
-if pw is None:
-  pw = getpass.getpass("Enter password for %s:" % user)
+if PASSWORD is None:
+  PASSWORD = getpass.getpass("Enter password for %s:" % user)
 
 try:
   connection = oracledb.connect(
-    user=user,
-    password=pw,
-    dsn=dsn
+    user=USER,
+    password=PASSWORD,
+    dsn=DSN
   )
 except Exception as e:
   print("couldn't connect to db:", e) 
